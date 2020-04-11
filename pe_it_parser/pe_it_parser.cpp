@@ -21,15 +21,15 @@ int main(int argc, char** argv)
 		return -1;
 	}
 	// Open the file
-	printf("* Open file...\n");
+	printf("* Trying to open the file...\n");
 	HANDLE hFile = CreateFileA(
-		argv[1],						// Name of the file
+		argv[1],			// Name of the file
 		GENERIC_READ | GENERIC_WRITE,	// Access rights
-		NULL,						    // Share mode
-		NULL,							// Security attribs				
-		OPEN_EXISTING,					// Open only if file exists
-		FILE_ATTRIBUTE_NORMAL,			// File haven't any attributes set
-		NULL							// Ignoring this parameter when open file
+		NULL,				// Share mode
+		NULL,				// Security attribs				
+		OPEN_EXISTING,			// Open only if file exists
+		FILE_ATTRIBUTE_NORMAL,		// File have no attribute
+		NULL				// Ignoring this parameter when opening file
 	);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
@@ -39,12 +39,12 @@ int main(int argc, char** argv)
 	
 	// Map file into process memory
 	HANDLE hFileMap = CreateFileMapping(
-		hFile,							// File handle
-		NULL,							// Security attribs
+		hFile,					// File handle
+		NULL,					// Security attribs
 		PAGE_READWRITE | SEC_IMAGE,		// Page access
-		0,								// High word max size
-		0,								// Low word max size
-		NULL							// Name
+		0,					// High word max size
+		0,					// Low word max size
+		NULL					// Name
 	);
 	if (!hFileMap)
 	{
@@ -54,11 +54,11 @@ int main(int argc, char** argv)
 
 	// Create file view
 	LPVOID lpFileView = MapViewOfFile(
-		hFileMap,				// Mapping handle
-		FILE_MAP_ALL_ACCESS,	// Access
-		0,						// File offset high word
-		0,						// File offset low word
-		0						// View all the file
+		hFileMap,			// Mapping handle
+		FILE_MAP_ALL_ACCESS,		// Access
+		0,				// File offset high word
+		0,				// File offset low word
+		0				// View all the file
 	);
 	if (!lpFileView)
 	{
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 	}
 
 	// Check if it's MZ
-	printf("* Check if it's PE...\n");
+	printf("* Checking if it's PE...\n");
 	PIMAGE_NT_HEADERS peFile = (PIMAGE_NT_HEADERS)lpFileView;
 	if (!isPE(peFile))
 	{
