@@ -122,7 +122,7 @@ int main(int argc, char** argv)
 void outHelp()
 {
 	printf(
-		"To use this utility you need to enter a name of the file as argument\n"
+		"To use this utility you need to enter a name of the file as an argument\n"
 		"In cmd it looks like:\n"
 		"> pe_it_parser file_name"
 	);
